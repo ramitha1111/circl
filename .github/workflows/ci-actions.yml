@@ -1,3 +1,8 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 1 optimization:
+# - [MEDIUM] Add concurrency group to "ci-actions.yml"
+# Estimated savings: ~2 min/run
+#
 ---
 name: CIRCL
 on:
@@ -8,6 +13,10 @@ on:
   pull_request:
     branches:
       - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   amd64_job:
     name: Go-${{matrix.GOVER}}/amd64
